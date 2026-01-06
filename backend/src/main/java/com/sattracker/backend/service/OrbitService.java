@@ -386,7 +386,7 @@ public class OrbitService {
                 res.setRange(
                         stationFrame.getRange(
                                 pvEcef.getPosition(), itrf, now) / 1000.0
-                ); // km
+                ); 
 
                 visible.add(res);
             }

@@ -1,0 +1,43 @@
+.dashboard {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #050b14;
+  color: #00ffcc;
+  font-family: monospace;
+}
+
+.header {
+  height: 50px;
+  background: #02070f;
+  border-bottom: 1px solid #00ffcc44;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+}
+
+.map-panel {
+  height: 100%;
+}
+
+.right-panel {
+  background: #030a14;
+  border-left: 1px solid #00ffcc33;
+  padding: 12px;
+  font-size: 12px;
+}
+
+.status-bar {
+  height: 80px;
+  background: #02070f;
+  border-top: 1px solid #00ffcc44;
+  padding: 8px 16px;
+  font-size: 12px;
+}

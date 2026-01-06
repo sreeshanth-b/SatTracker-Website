@@ -1,18 +1,8 @@
-function GroundStationSelector({ city, setCity }) {
+function GroundStationSelector() {
   return (
-    <div>
-      <label className="block text-sm mb-1">Ground Station</label>
-      <select
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        className="bg-gray-800 text-white p-2 rounded"
-      >
-        <option value="Hyderabad">Hyderabad</option>
-        <option value="Bangalore">Bangalore</option>
-        <option value="Delhi">Delhi</option>
-      </select>
+    <div style={{ opacity: 0.5 }}>
+      Ground Station Selector (coming soon)
     </div>
   );
 }
-
 export default GroundStationSelector;

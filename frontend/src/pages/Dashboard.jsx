@@ -1,33 +1,70 @@
 import { useState } from "react";
-import SatelliteSelector from "../components/SatelliteSelector";
-import GroundStationSelector from "../components/GroundStationSelector";
-import StatusCard from "../components/StatusCard";
+import "../styles/dashboard.css";
+
+import Map2D from "../components/map/Map2D";
+import SatellitePanel from "../components/panels/SatellitePanel";
+import SatelliteSelector from "../components/controls/SatelliteSelector";
+
+import { useSatellitePosition } from "../hooks/useSatellitePosition";
+import { useOrbitTrack } from "../hooks/useOrbitTrack";
 
 function Dashboard() {
-  const [satellite, setSatellite] = useState("LES-5");
-  const [city, setCity] = useState("Hyderabad");
+  const cityName = "Hyderabad";
+
+  const satellites = [
+    "SURCAL 159",
+    "ISS (ZARYA)",
+    "NOAA 15",
+    "NOAA 18"
+  ];
+
+  const [satelliteName, setSatelliteName] = useState(satellites[0]);
+
+  const { data, error } = useSatellitePosition(
+    satelliteName,
+    cityName
+  );
+
+  const orbitTrack = useOrbitTrack(satelliteName);
 
   return (
-    <div className="p-6 space-y-6">
-      {/* Header */}
-      <h1 className="text-3xl font-bold text-center">
-        🛰️ SatTracker Dashboard
-      </h1>
+    <div className="dashboard">
 
-      {/* Controls */}
-      <div className="flex gap-6 justify-center">
-        <SatelliteSelector
-          satellite={satellite}
-          setSatellite={setSatellite}
-        />
-        <GroundStationSelector
-          city={city}
-          setCity={setCity}
-        />
+      <div className="header">
+        <div>🛰 SatTracker</div>
+        <div>{satelliteName} | {cityName}</div>
       </div>
 
-      {/* Live Status */}
-      <StatusCard satellite={satellite} city={city} />
+      <div className="main">
+
+        <div className="map-panel">
+          <Map2D
+            satelliteData={data}
+            orbitTrack={orbitTrack}
+          />
+        </div>
+
+        <div className="right-panel">
+
+          <SatelliteSelector
+            satellites={satellites}
+            value={satelliteName}
+            onChange={setSatelliteName}
+          />
+
+          <hr style={{ borderColor: "#00ffcc33", margin: "12px 0" }} />
+
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <SatellitePanel data={data} />
+
+        </div>
+
+      </div>
+
+      <div className="status-bar">
+        STATUS: LIVE | ORBIT TRACK ENABLED
+      </div>
+
     </div>
   );
 }

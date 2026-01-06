@@ -1,11 +1,7 @@
-import CesiumGlobe from "./components/CesiumGlobe";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  return (
-    <div style={{ width: "100vw", height: "100vh" }}>
-      <CesiumGlobe />
-    </div>
-  );
+  return <Dashboard />;
 }
 
 export default App;

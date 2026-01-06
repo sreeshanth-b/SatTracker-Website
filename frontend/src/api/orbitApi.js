@@ -1,28 +1,11 @@
 const BASE_URL = "http://localhost:8080/api/orbit";
 
-// ==============================
-// 1️⃣ CURRENT SATELLITE POSITION
-// ==============================
-export async function getSatellitePosition({
-  satellite,
-  city,
-  country,
-  lat,
-  lon,
-  alt,
-  utc,
-}) {
-  let url = `${BASE_URL}/pos/${satellite}?`;
+const enc = (v) => encodeURIComponent(v);
 
-  if (city) url += `city=${city}&`;
-  if (country) url += `country=${country}&`;
-  if (lat != null && lon != null) {
-    url += `lat=${lat}&lon=${lon}&`;
-    if (alt != null) url += `alt=${alt}&`;
-  }
-  if (utc) url += `utc=${utc}`;
-
-  const res = await fetch(url);
+export async function getPosByCity(satellite, city) {
+  const res = await fetch(
+    `${BASE_URL}/pos/${enc(satellite)}?city=${enc(city)}`
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch satellite position");
@@ -31,82 +14,13 @@ export async function getSatellitePosition({
   return res.json();
 }
 
-// ==============================
-// 2️⃣ ORBIT TRACK (PATH POINTS)
-// ==============================
-export async function getOrbitTrack({
-  satellite,
-  city,
-  lat,
-  lon,
-  alt,
-}) {
-  let url = `${BASE_URL}/track/${satellite}?`;
-
-  if (city) url += `city=${city}&`;
-  if (lat != null && lon != null) {
-    url += `lat=${lat}&lon=${lon}&`;
-    if (alt != null) url += `alt=${alt}&`;
-  }
-
-  const res = await fetch(url);
+export async function getOrbitTrack(satellite) {
+  const res = await fetch(
+    `${BASE_URL}/track/${enc(satellite)}`
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch orbit track");
-  }
-
-  return res.json();
-}
-
-// ==============================
-// 3️⃣ NEXT PASS (AOS / LOS)
-// ==============================
-export async function getNextPass({
-  satellite,
-  city,
-  lat,
-  lon,
-  alt,
-}) {
-  let url = `${BASE_URL}/pass/${satellite}?`;
-
-  if (city) url += `city=${city}&`;
-  if (lat != null && lon != null) {
-    url += `lat=${lat}&lon=${lon}&`;
-    if (alt != null) url += `alt=${alt}&`;
-  }
-
-  const res = await fetch(url);
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch next pass");
-  }
-
-  return res.json();
-}
-
-// ==============================
-// 4️⃣ LIVE RADAR (AZ / EL)
-// ==============================
-export async function getLiveRadar({
-  satellite,
-  city,
-  lat,
-  lon,
-  alt,
-}) {
-  let url = `${BASE_URL}/live/${satellite}?`;
-
-  if (city) url += `city=${city}&`;
-  if (lat != null && lon != null) {
-    url += `lat=${lat}&lon=${lon}&`;
-    if (alt != null) url += `alt=${alt}&`;
-  }
-
-  const res = await fetch(url);
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch live radar");
   }
 
   return res.json();
